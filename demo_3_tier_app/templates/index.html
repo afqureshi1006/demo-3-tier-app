@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Three-Tier Student Demo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="container">
+    <header>
+      <p class="eyebrow">CLOUD COMPUTING LAB</p>
+      <h1>Student Registration</h1>
+      <p class="subtitle">A simple three-tier demo application</p>
+    </header>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="message">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <section class="card">
+      <h2>Add a student</h2>
+      <form method="post">
+        <label for="name">Student name</label>
+        <input id="name" name="name" type="text" placeholder="e.g. Ali Khan" required>
+
+        <label for="email">Email address</label>
+        <input id="email" name="email" type="email" placeholder="e.g. ali@example.com" required>
+
+        <button type="submit">Save student</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>Registered students</h2>
+      {% if students %}
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID</th><th>Name</th><th>Email</th></tr></thead>
+            <tbody>
+              {% for student in students %}
+                <tr>
+                  <td>{{ student["id"] }}</td>
+                  <td>{{ student["name"] }}</td>
+                  <td>{{ student["email"] }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p class="empty">No students yet. Add one using the form above.</p>
+      {% endif %}
+    </section>
+
+    <footer>Presentation: HTML/CSS · Application: Flask · Database: SQLite</footer>
+  </main>
+</body>
+</html>
